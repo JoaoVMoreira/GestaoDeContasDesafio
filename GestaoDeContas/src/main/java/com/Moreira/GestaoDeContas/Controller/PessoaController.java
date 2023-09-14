@@ -36,8 +36,8 @@ public class PessoaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Pessoa> buscarPorId(@PathVariable Long id){
-        Pessoa pessoa = repository.getReferenceById(id);
-        return  ResponseEntity.ok(pessoa);
+    public ResponseEntity<DadosListarPessoa> buscarPorId(@PathVariable Long id){
+        var pessoa = repository.getReferenceById(id);
+        return  ResponseEntity.ok(new DadosListarPessoa(pessoa));
     }
 }
