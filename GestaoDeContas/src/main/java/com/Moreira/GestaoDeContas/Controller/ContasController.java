@@ -39,9 +39,9 @@ public class ContasController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Conta> buscarPorId(@PathVariable Long id){
+    public ResponseEntity<DadosListarConta> buscarPorId(@PathVariable Long id){
         var conta = repository.getReferenceById(id);
-        return ResponseEntity.ok(conta);
+    return ResponseEntity.ok(new DadosListarConta(conta));
     }
 
 }
