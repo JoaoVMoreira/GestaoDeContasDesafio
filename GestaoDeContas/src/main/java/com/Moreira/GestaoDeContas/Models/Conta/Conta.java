@@ -25,11 +25,17 @@ public class Conta {
     @OneToOne
     @JoinColumn(name = "pessoa_id")
     private Pessoa pessoaId;
-    private Double Saldo;
+    private Double saldo;
     private Double limiteSaldoDiario;
-    private Boolean bandeiraAtivo;
+    private Boolean bandeiraAtivo = true;
     @Enumerated(EnumType.STRING)
     private TipoContaEnum tipoConta;
     private LocalDateTime dataCriacao = LocalDateTime.now();
 
+    public Conta(DadosCadastraConta dados) {
+        this.pessoaId = dados.pessoaId();
+        this.tipoConta = dados.tipoConta();
+        this.saldo = dados.saldo();
+        this.limiteSaldoDiario = dados.limiteSaldoDiario();
+    }
 }

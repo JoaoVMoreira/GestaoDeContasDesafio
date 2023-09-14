@@ -24,4 +24,10 @@ public class Pessoa {
     @Column(unique = true)
     private Long cpf;
     private LocalDate dataNascimento;
+
+    public Pessoa(DadosCadastraPessoa dados) {
+        this.nome = dados.nome();
+        this.cpf = dados.cpf();
+        this.dataNascimento = dados.dataNascimento();
+    }
 }
