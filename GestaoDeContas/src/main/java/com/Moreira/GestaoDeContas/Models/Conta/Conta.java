@@ -42,4 +42,12 @@ public class Conta {
     public void Bloquear() {
         this.bandeiraAtivo = !this.bandeiraAtivo;
     }
+
+    public void Depositar(Double valor){
+        this.saldo = this.saldo + valor;
+    }
+
+    public void Debitar(Double valor){
+        this.saldo = this.saldo - valor;
+    }
 }
