@@ -44,4 +44,16 @@ public class ContasController {
     return ResponseEntity.ok(new DadosListarConta(conta));
     }
 
+    //ConsultaSaldo
+    @GetMapping("/consultaSaldo/{id}")
+    public ResponseEntity<Double> consultaSaldo(@PathVariable Long id){
+        var saldo = repository.getReferenceById(id).getSaldo();
+        return ResponseEntity.ok(saldo);
+    }
+
+    //Saque
+
+    //Deposito
+    //BloquearConta
+
 }

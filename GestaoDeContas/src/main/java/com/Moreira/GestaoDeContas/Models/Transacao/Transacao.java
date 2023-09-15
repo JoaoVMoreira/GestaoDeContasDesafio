@@ -1,6 +1,7 @@
 package com.Moreira.GestaoDeContas.Models.Transacao;
 
 
+import com.Moreira.GestaoDeContas.Models.Conta.Conta;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,7 +21,9 @@ public class Transacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long clienteId;
+    @ManyToOne
+    @JoinColumn(name = "conta_id")
+    private Conta clienteId;
     private Double valorTransacao;
     private LocalDateTime dataTransacao = LocalDateTime.now();
 }
