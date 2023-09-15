@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/transacao")
 public class TransacaoController {
@@ -27,7 +29,14 @@ public class TransacaoController {
         return ResponseEntity.created(uri).body(new DadosListarTransacao(transacao));
     }
 
-    //ListarTransação
+    //ListarTransações
+    @GetMapping
+    public ResponseEntity<List<DadosListarTransacao>> listar(){
+        var contas = repository.findAll().stream().map(DadosListarTransacao::new).toList();
+        return ResponseEntity.ok(contas);
+    }
+
+
     //ExratoTransacaoPorPeriodo
     //Saque
     //Deposito
