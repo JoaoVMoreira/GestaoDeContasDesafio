@@ -1,9 +1,6 @@
 package com.Moreira.GestaoDeContas.Controller;
 
-import com.Moreira.GestaoDeContas.Models.Transacao.DadosCadastraTransacao;
-import com.Moreira.GestaoDeContas.Models.Transacao.DadosListarTransacao;
-import com.Moreira.GestaoDeContas.Models.Transacao.TipoTransacaoEnum;
-import com.Moreira.GestaoDeContas.Models.Transacao.Transacao;
+import com.Moreira.GestaoDeContas.Models.Transacao.*;
 import com.Moreira.GestaoDeContas.Repositorios.ContaRepository;
 import com.Moreira.GestaoDeContas.Repositorios.TransacaoRepository;
 import jakarta.validation.Valid;
@@ -13,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -44,5 +43,12 @@ public class TransacaoController {
         var contas = repository.findAll().stream().map(DadosListarTransacao::new).toList();
         return ResponseEntity.ok(contas);
     }
-    //ExratoTransacaoPorPeriodo
+
+    //ExtratoTransacaoPorPeriodo
+
+    @GetMapping("/periodo/{id}")
+    public ResponseEntity<List<DadosListarTransacao>> extrato(@RequestBody @Valid DadosBuscarPorData dados, @PathVariable Long id){
+        var transacoes = repository.BuscarPorPeriodo(dados.dataInicial(), dados.dataFinal(), id).stream().map(DadosListarTransacao::new).toList();
+        return ResponseEntity.ok(transacoes);
+    }
 }
