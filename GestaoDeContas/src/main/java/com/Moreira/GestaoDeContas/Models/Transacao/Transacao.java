@@ -26,4 +26,9 @@ public class Transacao {
     private Conta clienteId;
     private Double valorTransacao;
     private LocalDateTime dataTransacao = LocalDateTime.now();
+
+    public Transacao(DadosCadastraTransacao dados) {
+        this.clienteId = dados.clienteId();
+        this.valorTransacao = dados.valorTransacao();
+    }
 }
