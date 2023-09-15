@@ -23,7 +23,7 @@ public class Transacao {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "conta_id")
-    private Conta clienteId;
+    private Conta contaId;
     private Double valorTransacao;
 
     @Enumerated(EnumType.STRING)
@@ -31,7 +31,7 @@ public class Transacao {
     private LocalDateTime dataTransacao = LocalDateTime.now();
 
     public Transacao(DadosCadastraTransacao dados) {
-        this.clienteId = dados.clienteId();
+        this.contaId = dados.contaId();
         this.valorTransacao = dados.valorTransacao();
         this.tipoTransacao = dados.tipoTransacao();
     }

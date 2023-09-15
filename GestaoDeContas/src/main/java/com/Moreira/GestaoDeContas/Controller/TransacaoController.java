@@ -29,10 +29,16 @@ public class TransacaoController {
         var transacao = new Transacao(dados);
         repository.save(transacao);
         if(dados.tipoTransacao() == TipoTransacaoEnum.Debito){
-            var conta = contaRepository.getReferenceById(transacao.getClienteId().getId());
+
+            Double transacoesToday = repository.ValorTransacoesToday(LocalDate.now(), LocalDate.now().plusDays(1), dados.contaId().getId());
+            if(transacoesToday > dados.contaId().getLimiteSaldoDiario()){
+                throw new RuntimeException("Limite diário atingido");
+            }
+
+            var conta = contaRepository.getReferenceById(transacao.getContaId().getId());
             conta.Debitar(transacao.getValorTransacao());
         } else {
-            var conta = contaRepository.getReferenceById(transacao.getClienteId().getId());
+            var conta = contaRepository.getReferenceById(transacao.getContaId().getId());
             conta.Depositar(transacao.getValorTransacao());
         }
         var uri = uriComponentsBuilder.path("/transacao/{id}").buildAndExpand(transacao.getId()).toUri();
@@ -44,10 +50,11 @@ public class TransacaoController {
         return ResponseEntity.ok(contas);
     }
 
-    //ExtratoTransacaoPorPeriodo
-
     @GetMapping("/periodo/{id}")
     public ResponseEntity<List<DadosListarTransacao>> extrato(@RequestBody @Valid DadosBuscarPorData dados, @PathVariable Long id){
+        if(dados.dataInicial().isAfter(dados.dataFinal())){
+            throw new RuntimeException("A data inicial não pode ser superior a data final");
+        }
         var transacoes = repository.BuscarPorPeriodo(dados.dataInicial(), dados.dataFinal(), id).stream().map(DadosListarTransacao::new).toList();
         return ResponseEntity.ok(transacoes);
     }

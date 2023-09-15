@@ -16,4 +16,10 @@ public interface TransacaoRepository extends JpaRepository<Transacao, Long> {
     )
     List<Transacao> BuscarPorPeriodo(LocalDate dataInicial, LocalDate dataFinal, Long clinenteId);
 
+
+    @Query(
+            value = "SELECT SUM(VALOR_TRANSACAO) FROM TRANSACOES WHERE DATA_TRANSACAO BETWEEN :dataInicial AND :dataFinal AND TIPO_TRANSACAO = 'Debito' AND CONTA_ID = :id",
+            nativeQuery = true
+    )
+    Double ValorTransacoesToday(LocalDate dataInicial, LocalDate dataFinal, Long id);
 }

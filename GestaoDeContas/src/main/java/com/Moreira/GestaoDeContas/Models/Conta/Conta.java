@@ -48,6 +48,9 @@ public class Conta {
     }
 
     public void Debitar(Double valor){
+        if (valor > this.saldo){
+            throw new RuntimeException("O valor de debito é superior ao saldo disponivel em conta");
+        }
         this.saldo = this.saldo - valor;
     }
 }
