@@ -25,6 +25,7 @@ public class Transacao {
     @JoinColumn(name = "conta_id")
     private Conta clienteId;
     private Double valorTransacao;
+
     @Enumerated(EnumType.STRING)
     private TipoTransacaoEnum tipoTransacao;
     private LocalDateTime dataTransacao = LocalDateTime.now();
@@ -32,6 +33,7 @@ public class Transacao {
     public Transacao(DadosCadastraTransacao dados) {
         this.clienteId = dados.clienteId();
         this.valorTransacao = dados.valorTransacao();
+        this.tipoTransacao = dados.tipoTransacao();
     }
 
 }

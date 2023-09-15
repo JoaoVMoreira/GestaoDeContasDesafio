@@ -4,6 +4,7 @@ package com.Moreira.GestaoDeContas.Controller;
 import com.Moreira.GestaoDeContas.Models.Conta.Conta;
 import com.Moreira.GestaoDeContas.Models.Conta.DadosCadastraConta;
 import com.Moreira.GestaoDeContas.Models.Conta.DadosListarConta;
+import com.Moreira.GestaoDeContas.Models.Transacao.Transacao;
 import com.Moreira.GestaoDeContas.Repositorios.ContaRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,5 +59,6 @@ public class ContasController {
         conta.Bloquear();
         return ResponseEntity.ok(new DadosListarConta(conta));
     }
+
 
 }
