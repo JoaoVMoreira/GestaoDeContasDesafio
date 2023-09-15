@@ -41,7 +41,7 @@ public class ContasController {
     @GetMapping("/{id}")
     public ResponseEntity<DadosListarConta> buscarPorId(@PathVariable Long id){
         var conta = repository.getReferenceById(id);
-    return ResponseEntity.ok(new DadosListarConta(conta));
+        return ResponseEntity.ok(new DadosListarConta(conta));
     }
 
     //ConsultaSaldo
@@ -51,9 +51,13 @@ public class ContasController {
         return ResponseEntity.ok(saldo);
     }
 
-    //Saque
 
-    //Deposito
     //BloquearConta
+    @PutMapping("/{id}")
+    public ResponseEntity<DadosListarConta> bloquearConta(@PathVariable Long id){
+        var conta = repository.getReferenceById(id);
+        conta.Bloquear();
+        return ResponseEntity.ok(new DadosListarConta(conta));
+    }
 
 }

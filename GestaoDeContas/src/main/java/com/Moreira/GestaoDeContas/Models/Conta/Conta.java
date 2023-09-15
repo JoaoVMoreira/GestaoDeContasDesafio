@@ -38,4 +38,8 @@ public class Conta {
         this.saldo = dados.saldo();
         this.limiteSaldoDiario = dados.limiteSaldoDiario();
     }
+
+    public void Bloquear() {
+        this.bandeiraAtivo = !this.bandeiraAtivo;
+    }
 }
