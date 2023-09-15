@@ -4,6 +4,7 @@ package com.Moreira.GestaoDeContas.Controller;
 import com.Moreira.GestaoDeContas.Models.Conta.Conta;
 import com.Moreira.GestaoDeContas.Models.Conta.DadosCadastraConta;
 import com.Moreira.GestaoDeContas.Models.Conta.DadosListarConta;
+import com.Moreira.GestaoDeContas.Models.Conta.DadosTransacaoConta;
 import com.Moreira.GestaoDeContas.Models.Transacao.Transacao;
 import com.Moreira.GestaoDeContas.Repositorios.ContaRepository;
 import jakarta.validation.Valid;
@@ -51,7 +52,6 @@ public class ContasController {
         return ResponseEntity.ok(saldo);
     }
 
-
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<DadosListarConta> bloquearConta(@PathVariable Long id){
@@ -60,5 +60,21 @@ public class ContasController {
         return ResponseEntity.ok(new DadosListarConta(conta));
     }
 
+    //Saque
+    @PutMapping("/saque/{id}")
+    @Transactional
+    public ResponseEntity<DadosListarConta> saque(@PathVariable Long id, @RequestBody DadosTransacaoConta dados){
+        var conta = repository.getReferenceById(id);
+        conta.Debitar(dados.valor());
+        return ResponseEntity.ok(new DadosListarConta(conta));
+    }
 
+    //Deposito
+    @PutMapping("/deposito/{id}")
+    @Transactional
+    public ResponseEntity<DadosListarConta> deposito(@PathVariable Long id, @RequestBody DadosTransacaoConta dados){
+        var conta = repository.getReferenceById(id);
+        conta.Depositar(dados.valor());
+        return ResponseEntity.ok(new DadosListarConta(conta));
+    }
 }
