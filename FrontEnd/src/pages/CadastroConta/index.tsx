@@ -14,18 +14,17 @@ function CadastroConta(){
     }
 
     async function handleCadastraConta(){
-        try{
-            
             await api.post("/contas", {
                 pessoaId: cliente,
                 saldo: saldoInicial,
                 limiteSaldoDiario: limiteDiario,
                 tipoConta: tipoConta 
+            }).then(() => {
+                alert("teste")
+                console.log('teste')
+            }).catch((error)=>{
+                console.log(error)
             })
-            alert("Conta criada com sucesso!")
-        }catch(error){
-            alert("Ocorreu um erro: "+error)
-        }
     }
     
     useEffect(()=>{

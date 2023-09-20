@@ -1,54 +1,49 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { api } from "../../Services/api";
 
 function NovaTransacao(){
-
-    const [contas, setContas] = useState<any>([])
+    const [getContas, setGetContas] = useState([])
     const [conta, setConta] = useState("")
     const [tipoTransacao, setTipoTransacao] = useState("")
     const [valorTransacao, setValorTransacao] = useState("")
 
-    async function getClientes(){
-        const contasGeted = await api.get("/contas");
-        setContas(contasGeted.data)
-        console.log(contasGeted.data)
-    } 
+    async function GetContas(){
+        const response = await api.get("/contas")
+        setGetContas(response.data)
+    }
 
     useEffect(()=>{
-        getClientes()
+        GetContas()
     }, [])
 
     async function handleCadastraTransacao(){
-        alert(conta)
-        
-    }
-    /*
-    try{
-            await api.post("/transacoes", {
-                contaId: conta,
-                valorTransacao: valorTransacao,
-                tipoTransacao: tipoTransacao
-            })
-            alert("Cadastro de transação realzado com sucesso!!")
-        }catch(error){
-            alert("Ocorreu um erro: "+error)
+        const data = {
+            contaId: conta,
+            valorTransacao: parseFloat(valorTransacao),
+            tipoTransacao: tipoTransacao
         }
-    */
+
+        await api.post("/transacoes", data)
+        .then(()=>{alert("Transação realizada com sucesso")})
+        .catch((error) => {alert("Erro na transação: " + error)})
+    }
 
     return(
         <>
             <h1>NOVA TRANSAÇÃO</h1>
             <form onSubmit={handleCadastraTransacao}>
                 <select value={conta} onChange={(e) => setConta(e.target.value)}>
-                    {
-                        contas.map((item:any) => {
+                    <option accessKey="">Conta</option>
+                    {  
+                        getContas.map((item:any) => {
                             return(
-                                <option key={item.id} value={item.saldo}>{item.pessoaId.nome}</option>
+                                <option key={item.id} value={item.id}>{item.pessoaId.nome}</option>
                             )
                         })
                     }
                 </select>
                 <select value={tipoTransacao} onChange={(e) => setTipoTransacao(e.target.value)}>
+                    <option accessKey="">Tipo de Transação</option>
                     <option value="Debito">Débito</option>
                     <option value="Deposito">Deposito</option>
                 </select>
