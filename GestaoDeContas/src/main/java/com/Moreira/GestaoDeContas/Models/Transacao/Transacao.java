@@ -30,8 +30,8 @@ public class Transacao {
     private TipoTransacaoEnum tipoTransacao;
     private LocalDateTime dataTransacao = LocalDateTime.now();
 
-    public Transacao(DadosCadastraTransacao dados) {
-        this.contaId = dados.contaId();
+    public Transacao(Conta conta, DadosCadastraTransacao dados) {
+        this.contaId = conta;
         this.valorTransacao = dados.valorTransacao();
         this.tipoTransacao = dados.tipoTransacao();
     }

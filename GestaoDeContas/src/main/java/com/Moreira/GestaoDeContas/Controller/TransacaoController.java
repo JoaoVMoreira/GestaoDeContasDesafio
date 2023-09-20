@@ -27,19 +27,18 @@ public class TransacaoController {
     @PostMapping
     @Transactional
     public ResponseEntity<DadosListarTransacao> cadastrar(@RequestBody @Valid DadosCadastraTransacao dados, UriComponentsBuilder uriComponentsBuilder){
-        var transacao = new Transacao(dados);
+        var conta = contaRepository.findById(dados.contaId()).get();
+        var transacao = new Transacao(conta, dados);
         repository.save(transacao);
         if(dados.tipoTransacao() == TipoTransacaoEnum.Debito){
 
-            Double transacoesToday = repository.ValorTransacoesToday(LocalDate.now(), LocalDate.now().plusDays(1), dados.contaId().getId());
-            if(transacoesToday > dados.contaId().getLimiteSaldoDiario()){
+            Double transacoesToday = repository.ValorTransacoesToday(LocalDate.now(), LocalDate.now().plusDays(1), dados.contaId());
+            if(transacoesToday > conta.getLimiteSaldoDiario()){
                 throw new RuntimeException("Limite diário atingido");
             }
 
-            var conta = contaRepository.getReferenceById(transacao.getContaId().getId());
             conta.Debitar(transacao.getValorTransacao());
         } else {
-            var conta = contaRepository.getReferenceById(transacao.getContaId().getId());
             conta.Depositar(transacao.getValorTransacao());
         }
         var uri = uriComponentsBuilder.path("/transacao/{id}").buildAndExpand(transacao.getId()).toUri();

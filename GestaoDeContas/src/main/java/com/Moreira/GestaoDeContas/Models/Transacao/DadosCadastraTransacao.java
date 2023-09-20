@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public record DadosCadastraTransacao(
         @NotNull
-        Conta contaId,
+        Long contaId,
         @NotNull
         Double valorTransacao,
         @NotNull
