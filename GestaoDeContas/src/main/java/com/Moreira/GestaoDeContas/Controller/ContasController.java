@@ -19,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/contas")
+@CrossOrigin(origins = "*")
 public class ContasController {
 
 
