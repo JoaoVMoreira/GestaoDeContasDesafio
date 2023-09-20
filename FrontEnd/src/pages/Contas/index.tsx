@@ -1,4 +1,20 @@
+import {useEffect, useState} from 'react'
+import { api } from '../../Services/api';
+
 function Contas(){
+
+    const[getContas, setGetContas] = useState([])
+
+    async function GetContas(){
+        const response = await api.get("/contas")
+        setGetContas(response.data)
+    }
+
+    useEffect(()=> {
+        GetContas()
+    }, [])
+
+
     return(
         <>
             <h1>CONTAS</h1>
@@ -14,12 +30,19 @@ function Contas(){
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>teste</td>
-                            <td>teste</td>
-                            <td>teste</td>
-                            <td>teste</td>
-                        </tr>
+                        {
+                            getContas.map((item:any) => {
+                                return(
+                                    <tr key={item.id}>
+                                        <td>{item.pessoaId.nome}</td>
+                                        <td>{item.pessoaId.cpf}</td>
+                                        <td>{item.tipoConta}</td>
+                                        <td><button>i</button></td>
+                                    </tr>
+                                )
+                            })
+                        }
+                        
                     </tbody>
                 </table>
                     <button>+</button>
