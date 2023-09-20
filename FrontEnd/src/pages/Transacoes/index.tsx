@@ -1,4 +1,19 @@
+import { useState, useEffect } from "react";import { api } from "../../Services/api";
+ 'react'
+
 function Transacoes(){
+
+    const[getTransacao, setGetTransacao] = useState([])
+
+    async function getTransacoesData(){
+        const response = await api.get("/transacoes")
+        setGetTransacao(response.data)
+        console.log(response.data)
+    }
+
+    useEffect(()=> {
+        getTransacoesData()
+    }, [])
     return(
         <>
             <h1>TRANSAÇÕES</h1>
@@ -19,12 +34,19 @@ function Transacoes(){
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>teste</td>
-                            <td>teste</td>
-                            <td>teste</td>
-                            <td><button>Gerar Extrato</button></td>
-                        </tr>
+
+                        {
+                            getTransacao.map((item:any)=> {
+                                return(
+                                    <tr key={item.id}>
+                                        <td>{item.conta_id.pessoaId.nome}</td>
+                                        <td>{item.tipoTransacao}</td>
+                                        <td>{item.valorTransacao}</td>
+                                        <td><button>Gerar Extrato</button></td>
+                                    </tr>
+                                )
+                            })
+                        }
                     </tbody>
                 </table>
 

@@ -1,0 +1,20 @@
+.menu{
+    height: 90vh;
+    width: 15vw;
+    margin-left: 35%;
+    border-radius: 30px;
+    background: linear-gradient(185deg, #8748E2 3.27%, #8748E2 54.31%, #5E5BF0 94.81%);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) 1px;
+    display: flex;
+    flex-direction: column;
+    img{
+        height: 11vw;
+    }
+    li{
+        margin-top: 25%;
+    }
+    a{
+        color: white;
+        font-size: 20px;
+    }
+}

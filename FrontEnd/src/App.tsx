@@ -4,6 +4,7 @@ import NovaTransacao from "./pages/NovaTransacao"
 import Contas from "./pages/Contas"
 import Transacoes from "./pages/Transacoes"
 import CadastroConta from "./pages/CadastroConta"
+import Menu from "./Components/Menu"
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/contas" element={<Contas/>}/>
         <Route path="/transacoes" element={<Transacoes/>}/>
         <Route path="/criar_conta" element={<CadastroConta/>}/>
+        <Route path="/menu" element={<Menu/>}></Route>
       </Routes>
     </BrowserRouter>
   )

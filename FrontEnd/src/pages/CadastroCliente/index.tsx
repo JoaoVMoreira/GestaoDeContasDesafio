@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { api } from "../../Services/api";
+import Menu from "../../Components/Menu";
 
 function CadastrarPessoa(){
 
