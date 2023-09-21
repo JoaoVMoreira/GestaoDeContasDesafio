@@ -1,10 +1,11 @@
 import {useEffect, useState} from 'react'
 import { api } from '../../Services/api';
 import Menu from '../../Components/Menu';
+import { IContas } from '../../Interfaces/IContas';
 
 function Contas(){
 
-    const[getContas, setGetContas] = useState([])
+    const[getContas, setGetContas] = useState<IContas>()
 
     async function GetContas(){
         const response = await api.get("/contas")
@@ -34,7 +35,7 @@ function Contas(){
                         </thead>
                         <tbody>
                             {
-                                getContas.map((item:any) => {
+                                getContas?.map((item:any) => {
                                     return(
                                         <tr key={item.id}>
                                             <td>{item.pessoaId.nome}</td>
