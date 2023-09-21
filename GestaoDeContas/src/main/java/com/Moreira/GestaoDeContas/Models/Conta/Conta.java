@@ -32,8 +32,8 @@ public class Conta {
     private TipoContaEnum tipoConta;
     private LocalDateTime dataCriacao = LocalDateTime.now();
 
-    public Conta(DadosCadastraConta dados) {
-        this.pessoaId = dados.pessoaId();
+    public Conta(Pessoa pessoa, DadosCadastraConta dados) {
+        this.pessoaId = pessoa;
         this.tipoConta = dados.tipoConta();
         this.saldo = dados.saldo();
         this.limiteSaldoDiario = dados.limiteSaldoDiario();

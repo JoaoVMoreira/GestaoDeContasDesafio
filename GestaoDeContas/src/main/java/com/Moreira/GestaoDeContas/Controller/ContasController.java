@@ -7,6 +7,7 @@ import com.Moreira.GestaoDeContas.Models.Conta.DadosListarConta;
 import com.Moreira.GestaoDeContas.Models.Conta.DadosTransacaoConta;
 import com.Moreira.GestaoDeContas.Models.Transacao.Transacao;
 import com.Moreira.GestaoDeContas.Repositorios.ContaRepository;
+import com.Moreira.GestaoDeContas.Repositorios.PessoaRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +27,14 @@ public class ContasController {
     @Autowired
     private ContaRepository repository;
 
+    @Autowired
+    private PessoaRepository pessoaRepository;
+
     @PostMapping
     @Transactional
     public ResponseEntity<DadosListarConta> cadastrar(@RequestBody @Valid DadosCadastraConta dados, UriComponentsBuilder uriComponentsBuilder){
-        var conta = new Conta(dados);
+        var pessoa = pessoaRepository.findById(dados.pessoaId()).get();
+        var conta = new Conta(pessoa, dados);
         repository.save(conta);
         var uri = uriComponentsBuilder.path("/conta/{id}").buildAndExpand(conta.getId()).toUri();
         return ResponseEntity.created(uri).body(new DadosListarConta(conta));

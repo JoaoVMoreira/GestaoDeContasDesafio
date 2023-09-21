@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -34,7 +33,7 @@ public class TransacaoController {
 
             Double transacoesToday = repository.ValorTransacoesToday(LocalDate.now(), LocalDate.now().plusDays(1), dados.contaId());
             if(transacoesToday > conta.getLimiteSaldoDiario()){
-                throw new RuntimeException("Limite diário atingido");
+                throw new IllegalArgumentException("Limite diário atingido");
             }
 
             conta.Debitar(transacao.getValorTransacao());

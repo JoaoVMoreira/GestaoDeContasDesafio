@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record DadosCadastraConta(
         @NotNull
-        Pessoa pessoaId,
+        Long pessoaId,
         @NotNull
         Double saldo,
         @NotNull
