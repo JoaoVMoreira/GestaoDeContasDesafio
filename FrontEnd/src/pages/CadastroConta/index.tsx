@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { api } from "../../Services/api";
+import Menu from "../../Components/Menu";
 
 function CadastroConta(){
     const [cliente, SetCliente] = useState("")
@@ -33,29 +34,34 @@ function CadastroConta(){
     
     return( 
         <>
-            <h1>CRIAR CONTA</h1>
-
-            <form action="" onSubmit={handleCadastraConta}>
-                <select placeholder="Cliente" value={cliente} onChange={(e) => SetCliente(e.target.value)}>
-                    <option accessKey="">Clinete</option>
-                    {
-                        clientes.map((item: any)=>{
-                            return(
-                                <option key={item.id} value={item.id}>{item.nome}</option>
-                            )
-                        })
-                    }
-                </select>
-                <select value={tipoConta} onChange={(e) => SetTipoConta(e.target.value)}>
-                    <option>Tipo conta</option>
-                    <option value="Corrente">Corrente</option>
-                    <option value="Poupança">Poupança</option>
-                    <option value="Salario">Salario</option>
-                </select>
-                <input type="number" placeholder="Saldo inicial" value={saldoInicial} onChange={(e) => SetSaldoInicial(e.target.value)}/>
-                <input type="number" placeholder="Limite diário" value={limiteDiario} onChange={(e) => SetLimiteDiario(e.target.value)}/>
-                <button type="submit">CONFIRMAR</button>
-            </form>
+        <div className="page">
+            <Menu/>
+            <div className="conteiner">
+                <h1>CRIAR CONTA</h1>
+                <form action="" onSubmit={handleCadastraConta}>
+                    <select placeholder="Cliente" value={cliente} onChange={(e) => SetCliente(e.target.value)}>
+                        <option accessKey="">Clinete</option>
+                        {
+                            clientes.map((item: any)=>{
+                                return(
+                                    <option key={item.id} value={item.id}>{item.nome}</option>
+                                )
+                            })
+                        }
+                    </select>
+                    <select value={tipoConta} onChange={(e) => SetTipoConta(e.target.value)}>
+                        <option>Tipo conta</option>
+                        <option value="Corrente">Corrente</option>
+                        <option value="Poupança">Poupança</option>
+                        <option value="Salario">Salario</option>
+                    </select>
+                    <input type="number" placeholder="Saldo inicial" value={saldoInicial} onChange={(e) => SetSaldoInicial(e.target.value)}/>
+                    <input type="number" placeholder="Limite diário" value={limiteDiario} onChange={(e) => SetLimiteDiario(e.target.value)}/>
+                    <button type="submit">CONFIRMAR</button>
+                </form>
+            </div>
+        </div>
+            
         </>
     )
 }

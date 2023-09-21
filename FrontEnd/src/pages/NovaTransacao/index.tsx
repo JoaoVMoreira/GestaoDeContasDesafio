@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "../../Services/api";
+import Menu from "../../Components/Menu";
 
 function NovaTransacao(){
     const [getContas, setGetContas] = useState([])
@@ -30,26 +31,32 @@ function NovaTransacao(){
 
     return(
         <>
-            <h1>NOVA TRANSAÇÃO</h1>
-            <form onSubmit={handleCadastraTransacao}>
-                <select value={conta} onChange={(e) => setConta(e.target.value)}>
-                    <option accessKey="">Conta</option>
-                    {  
-                        getContas.map((item:any) => {
-                            return(
-                                <option key={item.id} value={item.id}>{item.pessoaId.nome}</option>
-                            )
-                        })
-                    }
-                </select>
-                <select value={tipoTransacao} onChange={(e) => setTipoTransacao(e.target.value)}>
-                    <option accessKey="">Tipo de Transação</option>
-                    <option value="Debito">Débito</option>
-                    <option value="Deposito">Deposito</option>
-                </select>
-                <input type="number" placeholder="Valor Transação" value={valorTransacao} onChange={(e) => setValorTransacao(e.target.value)}/>
-                <button type="submit">CONFIRMAR</button>
-            </form>
+        <div className="page">
+            <Menu/>
+            <div className="conteiner">
+                <h1>NOVA TRANSAÇÃO</h1>
+                <form onSubmit={handleCadastraTransacao}>
+                    <select value={conta} onChange={(e) => setConta(e.target.value)}>
+                        <option accessKey="">Conta</option>
+                        {  
+                            getContas.map((item:any) => {
+                                return(
+                                    <option key={item.id} value={item.id}>{item.pessoaId.nome}</option>
+                                )
+                            })
+                        }
+                    </select>
+                    <select value={tipoTransacao} onChange={(e) => setTipoTransacao(e.target.value)}>
+                        <option accessKey="">Tipo de Transação</option>
+                        <option value="Debito">Débito</option>
+                        <option value="Deposito">Deposito</option>
+                    </select>
+                    <input type="number" placeholder="Valor Transação" value={valorTransacao} onChange={(e) => setValorTransacao(e.target.value)}/>
+                    <button type="submit">CONFIRMAR</button>
+                </form>
+            </div>
+        </div>
+            
         </>
     )
 }
