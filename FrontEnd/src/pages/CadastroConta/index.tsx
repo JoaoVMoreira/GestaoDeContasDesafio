@@ -3,6 +3,9 @@ import { api } from "../../Services/api";
 import Menu from "../../Components/Menu";
 import { IContas, IContasArray } from "../../Interfaces/IContas";
 
+import './CadastraConta.scss'
+import { Link } from "react-router-dom";
+
 function CadastroConta(){
     const [cliente, SetCliente] = useState<number>(0)
     const [tipoConta, SetTipoConta] = useState<string>("")
@@ -39,25 +42,43 @@ function CadastroConta(){
             <div className="conteiner">
                 <h1>CRIAR CONTA</h1>
                 <form action="" onSubmit={handleCadastraConta}>
-                    <select placeholder="Cliente" value={cliente} onChange={(e) => SetCliente(parseInt(e.target.value))}>
-                        <option accessKey="">Clinete</option>
-                        {
-                            clientes?.map((item: any)=>{
-                                return(
-                                    <option key={item.id} value={item.id}>{item.nome}</option>
-                                )
-                            })
-                        }
-                    </select>
-                    <select value={tipoConta} onChange={(e) => SetTipoConta(e.target.value)}>
-                        <option>Tipo conta</option>
-                        <option value="Corrente">Corrente</option>
-                        <option value="Poupança">Poupança</option>
-                        <option value="Salario">Salario</option>
-                    </select>
-                    <input type="number" placeholder="Saldo inicial" value={saldoInicial} onChange={(e) => SetSaldoInicial(parseFloat(e.target.value))}/>
-                    <input type="number" placeholder="Limite diário" value={limiteDiario} onChange={(e) => SetLimiteDiario(parseFloat(e.target.value))}/>
-                    <button type="submit">CONFIRMAR</button>
+                    <label htmlFor="select">
+                        <p>Cliente</p>
+                        <select value={cliente} onChange={(e) => SetCliente(parseInt(e.target.value))}>
+                            <option accessKey=""></option>
+                            {
+                                clientes?.map((item: any)=>{
+                                    return(
+                                        <option key={item.id} value={item.id}>{item.nome}</option>
+                                    )
+                                })
+                            }
+                        </select>
+                    </label>
+
+                    <div className="select-s">
+                        <label htmlFor="select">
+                            <p>Tipo Conta</p>
+                            <select value={tipoConta} onChange={(e) => SetTipoConta(e.target.value)}>
+                                <option></option>
+                                <option value="Corrente">Corrente</option>
+                                <option value="Poupança">Poupança</option>
+                                <option value="Salario">Salario</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div className="big-input">
+                        <label htmlFor="input">
+                            <p>Saldo inicial</p>
+                            <input type="number" value={saldoInicial} onChange={(e) => SetSaldoInicial(parseFloat(e.target.value))}/>
+                        </label>
+                        <label htmlFor="input">
+                            <p>Limite de débito diário</p>
+                            <input type="number" value={limiteDiario} onChange={(e) => SetLimiteDiario(parseFloat(e.target.value))}/>
+                        </label>
+                    </div>
+                    <div className="btn"><button type="submit">CONFIRMAR</button></div>
+                    
                 </form>
             </div>
         </div>

@@ -1,0 +1,103 @@
+.conteiner-title{
+    width: 75vw;
+    height: 15vh;
+    border-radius: 30px;
+    background: #EDEDED;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    h1{
+        margin: 0;
+    }
+}
+
+.src-content{
+    margin-top: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    label{
+        width: 32%;
+        margin-left: 2%;
+        p{
+            font-size: 14px;
+            margin-left: 3%;
+        }
+        input{
+            border-radius: 20px;
+            background: #EDEDED;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            border: none;
+            height: 50px;
+            width: 100%;
+        }
+    }
+    label:first-child{
+        margin-left: 0;
+    }
+}
+
+.table-content{
+    margin-top: 3%;
+    border-radius: 30px;
+    background: #EDEDED;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    height: 60vh;
+
+    .tabela{
+        overflow-x: hidden;
+        overflow-y: scroll;
+        height: 50vh;
+    }
+    table{
+        height: auto;
+        margin-top: 1%;
+        margin-left: 8%;
+        width: 90%;
+        text-align: center;
+        button{
+            width: 130px;
+            height: 30px;
+            border-radius: 5%;
+            border: none;
+            background-color: #F3C738;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        button:hover{
+            cursor: pointer;
+            background-color: #d4ae30;
+            transition: 0.4s;
+        }
+        th{
+            height: 60px;
+        }
+    }
+}
+.btn{
+    position: absolute;
+    bottom: 7%;
+    left: 50%;
+    button{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #8748E2;
+        border: none;  
+        a{
+            padding: 15px;
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+        }
+    }
+
+    button:hover{
+        cursor: pointer;
+        background-color: #6f3cb6;
+        transition: 0.4s;
+    }
+}

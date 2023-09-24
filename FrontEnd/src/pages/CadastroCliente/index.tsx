@@ -31,12 +31,22 @@ function CadastrarPessoa(){
                     <h1>CADASTRAR CLIENTE</h1>
 
                     <form action="" onSubmit={handleCadastraConta}>
+                        <label htmlFor="input">
+                            <p>Nome</p>
+                            <input type="text" value={nome} onChange={(e) => setNome(e.target.value)}/>
+                        </label>
                         <div className="big-input">
-                            <input type="text" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)}/>
+                            <label htmlFor="input">
+                                <p>CPF</p>
+                                <input type="number" value={cpf} onChange={(e) => setCpf(parseInt(e.target.value))}/>
+                            </label>
+                            <label htmlFor="input">
+                                <p>Data de Nascimento</p>
+                                <input type="date" value={dataNascimento} onChange={(e) => SetDataNascimento(e.target.value)}/>
+                            </label>
                         </div>
-                        <input type="number" placeholder="CPF" value={cpf} onChange={(e) => setCpf(parseInt(e.target.value))}/>
-                        <input type="date" placeholder="Data de Nascimento" value={dataNascimento} onChange={(e) => SetDataNascimento(e.target.value)}/>
-                        <button type="submit">CONFIRMAR</button>
+                        <div className="btn"><button type="submit">CONFIRMAR</button></div>
+                        
                     </form>
                 </div>
             </div>

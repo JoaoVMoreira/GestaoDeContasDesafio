@@ -15,36 +15,52 @@ function Menu(){
                 <Link to={"/"}><img src={logo}/></Link>
                 <nav>
                     <ul>
-                        <li><Link to={'/'}>
-                            <div className='menu-icon'>
-                                <BsFillPersonVcardFill/>
-                                <label>Cadastra Cliente</label>
-                            </div>
-                        </Link></li>
-                        <li><Link to={'/criar_conta'}>
-                            <div className='menu-icon'>
-                                <BsFillPersonPlusFill/>
-                                <label>Cadastra Conta</label>
-                            </div>
-                        </Link></li>
-                        <li><Link to={'/novaTransacao'}>
-                            <div className='menu-icon'>
-                                <FaMoneyBillTransfer/>
-                                <label>Nova Transação</label>
-                            </div>
-                        </Link></li>
-                        <li><Link to={'/transacoes'}>
-                            <div className='menu-icon'>
-                                <TbReportMoney/>
-                                <label>Transações</label>
-                            </div>
-                        </Link></li>
-                        <li><Link to={'/contas'}>
-                            <div className='menu-icon'>
-                                <BsPersonRolodex/>
-                                <label>Contas</label>
-                            </div>
-                        </Link></li>
+
+                        <li>
+                            <Link to={'/'}>
+                                <div className='menu-icon'>
+                                    <BsFillPersonVcardFill/>
+                                    <label>Cadastra Cliente</label>
+                                </div>
+                            </Link>
+                        </li>
+
+                        <li>
+                            <Link to={'/criar_conta'}>
+                                <div className='menu-icon'>
+                                    <BsFillPersonPlusFill/>
+                                    <label>Cadastra Conta</label>
+                                </div>
+                            </Link>
+                        </li>
+
+                        <li>
+                            <Link to={'/novaTransacao'}>
+                                <div className='menu-icon'>
+                                    <FaMoneyBillTransfer/>
+                                    <label>Nova Transação</label>
+                                </div>
+                            </Link>
+                        </li>
+
+                        <li>
+                            <Link to={'/transacoes'}>
+                                <div className='menu-icon'>
+                                    <TbReportMoney/>
+                                    <label>Transações</label>
+                                </div>
+                            </Link>
+                        </li>
+
+                        <li>
+                            <Link to={'/contas'}>
+                                <div className='menu-icon'>
+                                    <BsPersonRolodex/>
+                                    <label>Contas</label>
+                                </div>
+                            </Link>
+                        </li>
+                        
                     </ul>
                 </nav>
             </div>
