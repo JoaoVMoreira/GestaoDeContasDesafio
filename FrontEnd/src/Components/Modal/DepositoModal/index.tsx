@@ -2,24 +2,24 @@ import { api } from '../../../Services/api';
 import '../modal.scss'
 import {useState} from 'react'
 
-function SaqueModal({isOpen, close, id}:any){
+function DepositoModal({isOpen, close, id}:any){
 
-    const[valorSaque, setValorSaque] = useState<number|undefined>();
+    const[valorDeposito, setValorDeposito] = useState<number|undefined>();
 
     async function handleSaque(){
-        if(valorSaque == null){
-            alert("Favor informar o valor do saque")
+        if(valorDeposito == null){
+            alert("Favor informar o valor do deposito")
         }
 
         const data = {
-            valor: valorSaque
+            valor: valorDeposito
         }
-        const response = await api.put(`/contas/saque/${id}`, data)
+        const response = await api.put(`/contas/deposito/${id}`, data)
             .then(res => {
-                alert("Saque realizado com sucesso!")
+                alert("Deposito realizado com sucesso!")
                 return close();
             }).catch(error => {
-                return alert("Erro ao realizar o saque" + error)
+                return alert("Erro ao realizar o deposito" + error)
             })
     }
 
@@ -31,10 +31,10 @@ function SaqueModal({isOpen, close, id}:any){
                         <h2>Sacar valor</h2>
                         <label htmlFor="">
                             <p>Insira o valor de saque:</p>
-                            <input type="number" value={valorSaque} onChange={(e) => setValorSaque(parseFloat(e.target.value))}/>
+                            <input type="number" value={valorDeposito} onChange={(e) => setValorDeposito(parseFloat(e.target.value))}/>
                         </label>
                         <div className='modal-btn'>
-                            <button onClick={handleSaque}>SACAR</button>
+                            <button onClick={handleSaque}>DEPOSITAR</button>
                             <button onClick={close}>CLOSE</button>
                         </div>
                     </div>
@@ -45,4 +45,4 @@ function SaqueModal({isOpen, close, id}:any){
 
 }
 
-export default SaqueModal;
+export default DepositoModal;

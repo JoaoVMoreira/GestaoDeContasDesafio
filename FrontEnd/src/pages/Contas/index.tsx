@@ -9,6 +9,7 @@ import { format, parseISO} from "date-fns"
 
 import './contas.scss'
 import SaqueModal from '../../Components/Modal/SaqueModal';
+import DepositoModal from '../../Components/Modal/DepositoModal';
 
 function Contas(){
     const data:IContasFull = {
@@ -29,6 +30,7 @@ function Contas(){
     const[showInfos, setShowInfos] = useState<boolean>(false)
     const[selectedItem, setSelectedItem] = useState<IContasFull>(data)
     const[saqueModal, setSaqueModal] = useState<boolean>(false)
+    const[depositoModal, setDepositoModal] = useState<boolean>(false)
     const navigate = useNavigate();
 
     async function GetContas(){
@@ -55,6 +57,16 @@ function Contas(){
     }
 
     //<--MODAL DEPOSITO-->
+    function handleOpenDepositoModal(){
+        setDepositoModal(true)
+    }
+
+    function handleCloseDepositoModal(){
+        setDepositoModal(false)
+        navigate(0)
+    }
+
+
 
     async function handleDesativaConta(id: number){
         const response = api.put(`/contas/${id}`)
@@ -156,11 +168,12 @@ function Contas(){
                                     <div>
                                         <button onClick={()=>{handleDesativaConta(selectedItem.id)}}>Desativar Conta</button>
                                         <button onClick={handleOpenSaqueModal}>Sacar</button>
-                                        <button>Depositar</button>
+                                        <button onClick={handleOpenDepositoModal}>Depositar</button>
                                     </div>
                                 </table>
 
                                 <SaqueModal isOpen={saqueModal} close={handleCloseSaqueModal} id={selectedItem.id}/>
+                                <DepositoModal isOpen={depositoModal} close={handleCloseDepositoModal} id={selectedItem.id}/>
                             </>
                     )}
                     </div>
