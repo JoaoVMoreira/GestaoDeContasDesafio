@@ -165,12 +165,16 @@ function Contas(){
                                              ): (<td>Desativado</td>)}
                                         </tr>
                                     </tbody>
-                                    <div>
-                                        <button onClick={()=>{handleDesativaConta(selectedItem.id)}}>Desativar Conta</button>
+                                </table>
+                                    <div className='infos-btn'>
+                                        {selectedItem.bandeiraAtivo == true ? (
+                                            <button onClick={()=>{handleDesativaConta(selectedItem.id)}}>Desativar Conta</button>
+                                        ): (
+                                            <button onClick={()=>{handleDesativaConta(selectedItem.id)}}>Ativar Conta</button>
+                                        )}
                                         <button onClick={handleOpenSaqueModal}>Sacar</button>
                                         <button onClick={handleOpenDepositoModal}>Depositar</button>
                                     </div>
-                                </table>
 
                                 <SaqueModal isOpen={saqueModal} close={handleCloseSaqueModal} id={selectedItem.id}/>
                                 <DepositoModal isOpen={depositoModal} close={handleCloseDepositoModal} id={selectedItem.id}/>

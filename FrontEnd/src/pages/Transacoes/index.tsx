@@ -3,14 +3,20 @@ import Menu from "../../Components/Menu";
 import { ITransacoesArray } from "../../Interfaces/ITransacoes";
 import { Link } from "react-router-dom";
 import './transacao.scss'
+import ExtratoModal from "../../Components/Extrado";
 
 function Transacoes(){
 
     const[getTransacao, setGetTransacao] = useState<ITransacoesArray>()
+    const[extratoModal, setExtratoModal] = useState<boolean>(false)
 
     async function getTransacoesData(){
         const response = await api.get("/transacoes")
         setGetTransacao(response.data)
+    }
+
+    function handleExtratoModal(){
+        setExtratoModal(!extratoModal)
     }
 
     useEffect(()=> {
@@ -61,7 +67,7 @@ function Transacoes(){
                                                     <td>{item.conta_id.pessoaId.nome}</td>
                                                     <td>{item.tipoTransacao}</td>
                                                     <td>{item.valorTransacao}</td>
-                                                    <td><button>GERAR ESTRATO</button></td>
+                                                    <td><button onClick={handleExtratoModal}>GERAR ESTRATO</button></td>
                                                 </tr>
                                             )
                                         })
@@ -74,6 +80,7 @@ function Transacoes(){
                         </div>
                     </div>
                 </div>
+                <ExtratoModal isOpen={extratoModal} close={handleExtratoModal}/>
             </div>
         </>
     )
