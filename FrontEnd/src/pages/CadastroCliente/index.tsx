@@ -4,22 +4,33 @@ import Menu from "../../Components/Menu";
 
 import './CadastroCliente.scss'
 import { IPessoa } from "../../Interfaces/IPessoa";
+import { useNavigate } from "react-router-dom";
 
 function CadastrarPessoa(){
 
     const [nome, setNome] = useState<string>("");
     const [cpf, setCpf] = useState<number>(0);
     const [dataNascimento, SetDataNascimento] = useState("");
+    const navigate = useNavigate();
+
     async function handleCadastraConta(){
+
+        if(nome == '' || cpf == 0 || dataNascimento == ''){
+            return alert('Favor preencher todos os campos')
+        }
+
         const data: IPessoa = {
             nome: nome,
             cpf: cpf, 
             dataNascimento: new Date(dataNascimento)
         }
-        await api.post("/pessoas", data).then(response => {
+        await api.post("/pessoas", data)
+        .then(response=>{
             alert("Cliente cadastrado com sucesso")
+            navigate("/criar_conta")
+            return navigate(0)
         }).catch(error => {
-            alert("Erro ao cadastrar: "+error)
+            return alert("Erro ao cadastrar: "+error)
         })
     }
 

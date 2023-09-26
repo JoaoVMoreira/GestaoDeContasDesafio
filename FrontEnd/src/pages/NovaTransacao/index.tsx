@@ -5,13 +5,13 @@ import { IContasArray } from "../../Interfaces/IContas";
 import { ITransacoes } from "../../Interfaces/ITransacoes";
 
 import './novaTransacao.scss'
-import { Navigate, useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 function NovaTransacao(){
     const [getContas, setGetContas] = useState<IContasArray>()
     const [conta, setConta] = useState<number>(0)
     const [tipoTransacao, setTipoTransacao] = useState<string>("")
-    const [valorTransacao, setValorTransacao] = useState<number>(0)
+    const [valorTransacao, setValorTransacao] = useState<number>()
     const navigate = useNavigate();
 
     async function GetContas(){
@@ -24,6 +24,11 @@ function NovaTransacao(){
     }, [])
 
     async function handleCadastraTransacao(){
+
+        if(conta == null || tipoTransacao == '' || valorTransacao == 0){
+            return alert('Favor preencher todos os campos')
+
+        }
         const data: ITransacoes = {
             contaId: conta,
             valorTransacao: valorTransacao,
@@ -34,8 +39,11 @@ function NovaTransacao(){
         .then(response=>{
             alert("Transação realizada com sucesso")
             navigate("/transacoes")
+            navigate(0)
         })
-        .catch((error) => {alert("Erro na transação: " + error)})
+        .catch(error => {return alert("Erro na transação: " + error)})
+        
+        
     }
 
     return(
@@ -69,7 +77,7 @@ function NovaTransacao(){
                         </label>
                         <label htmlFor="input">
                             <p>Valor da transação</p>
-                            <input type="number" placeholder="Valor Transação" value={valorTransacao} onChange={(e) => setValorTransacao(parseFloat(e.target.value))}/>
+                            <input type="number" value={valorTransacao} onChange={(e) => setValorTransacao(parseFloat(e.target.value))}/>
                         </label>
                     </div>
                     <div className="btn"><button type="submit">CONFIRMAR</button></div>

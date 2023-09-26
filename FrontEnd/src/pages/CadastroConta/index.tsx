@@ -4,14 +4,15 @@ import Menu from "../../Components/Menu";
 import { IContas, IContasArray } from "../../Interfaces/IContas";
 
 import './CadastraConta.scss'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function CadastroConta(){
     const [cliente, SetCliente] = useState<number>(0)
     const [tipoConta, SetTipoConta] = useState<string>("")
-    const [saldoInicial, SetSaldoInicial] = useState<number>(0)
-    const [limiteDiario, SetLimiteDiario] = useState<number>(0)
+    const [saldoInicial, SetSaldoInicial] = useState<number>()
+    const [limiteDiario, SetLimiteDiario] = useState<number>()
     const [clientes, setClientes] = useState<IContasArray>()
+    const navigate = useNavigate();
 
     async function listClientes(){
         const response = await api.get("/pessoas")
@@ -20,6 +21,11 @@ function CadastroConta(){
 
     async function handleCadastraConta(){
 
+        if(cliente == null || tipoConta == '' || limiteDiario == 0){
+            return alert("Favor preencher todos os campos")
+
+        }
+
         const data: IContas = {
             pessoaId: cliente,
             saldo: saldoInicial,
@@ -27,8 +33,13 @@ function CadastroConta(){
             tipoConta: tipoConta 
         }
             await api.post("/contas", data)
-            .then(response => {alert("Cadastro realizado com sucesso")})
-            .catch(error=>{alert("Ocorreu um erro no cadastro do cliente: "+ error)})
+            .then(response => { 
+                alert("Cadastro realizado com sucesso")
+                navigate("/contas")
+                return navigate(0)
+                
+            })
+            .catch(error=>{return alert("Ocorreu um erro no cadastro do cliente: "+ error)})
     }
     
     useEffect(()=>{

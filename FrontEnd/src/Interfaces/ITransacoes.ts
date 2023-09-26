@@ -1,6 +1,6 @@
 export interface ITransacoes{
     contaId: number,
-    valorTransacao: number,
+    valorTransacao: number | undefined,
     tipoTransacao: string
 }
 
