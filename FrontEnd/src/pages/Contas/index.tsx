@@ -26,6 +26,7 @@ function Contas(){
         bandeiraAtivo: true
     }
 
+    const [busca, setBusca] = useState("")
     const[getContas, setGetContas] = useState<IContas>()
     const[showInfos, setShowInfos] = useState<boolean>(false)
     const[selectedItem, setSelectedItem] = useState<IContasFull>(data)
@@ -38,7 +39,6 @@ function Contas(){
         setGetContas(response.data)
     }
 
-
     //<--INFOS-->
     function handleShowInfo(item:any){
         setSelectedItem(item)
@@ -50,7 +50,6 @@ function Contas(){
     function handleOpenSaqueModal(){
         setSaqueModal(true)
     }
-
     function handleCloseSaqueModal(){
         setSaqueModal(false)
         navigate(0)
@@ -60,13 +59,16 @@ function Contas(){
     function handleOpenDepositoModal(){
         setDepositoModal(true)
     }
-
     function handleCloseDepositoModal(){
         setDepositoModal(false)
         navigate(0)
     }
 
-
+    const filterContas = getContas?.filter((item:IContasFull)=>
+        item.pessoaId.nome.toLowerCase().includes(busca.toLowerCase()) ||
+        
+        item.pessoaId.cpf.toString().includes(busca)
+        )
 
     async function handleDesativaConta(id: number){
         const response = api.put(`/contas/${id}`)
@@ -108,7 +110,7 @@ function Contas(){
                                 </thead>
                                 <tbody>
                                     {
-                                        getContas?.map((item:IContasFull) => {
+                                        filterContas?.map((item:IContasFull) => {
                                             return(
                                                 <tr key={item.id}>
                                                     <td>{item.pessoaId.nome}</td>
@@ -127,7 +129,7 @@ function Contas(){
                         </div>
                     </div>
                     <div className='src-btn'>
-                        <input type="text" placeholder='Buscar'/>
+                        <input type="text" placeholder='Buscar' value={busca} onChange={e => setBusca(e.target.value)}/>
                         <div className='dataCriacao'>
                         {showInfos == true && (
                             <>
