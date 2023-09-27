@@ -27,6 +27,7 @@ function Transacoes(){
     const[getTransacao, setGetTransacao] = useState<ITransacoesArray>()
     const[extratoModal, setExtratoModal] = useState<boolean>(false)
     const[transacao, setTransacao] = useState<ITransacaoFull>(data)
+    const[busca, setBusca] = useState<string>('')
 
     async function getTransacoesData(){
         const response = await api.get("/transacoes")
@@ -37,6 +38,10 @@ function Transacoes(){
         setExtratoModal(!extratoModal)
         setTransacao(item)
     }
+
+    const filterTransacao = getTransacao?.filter((item:ITransacaoFull)=> 
+        item.conta_id.pessoaId.nome.toLowerCase().includes(busca.toLowerCase())
+    )
 
     useEffect(()=> {
         getTransacoesData()
@@ -54,7 +59,7 @@ function Transacoes(){
                     <div className="src-content">
                         <label htmlFor="">
                             <p>Conta</p>
-                            <input type="text"/>
+                            <input type="text" value={busca} onChange={e => setBusca(e.target.value)}/>
                         </label>
                         <label htmlFor="">
                             <p>Data Inicial</p>
@@ -80,7 +85,7 @@ function Transacoes(){
                                 <tbody>
 
                                     {
-                                        getTransacao?.map((item:any)=> {
+                                        filterTransacao?.map((item:ITransacaoFull)=> {
                                             return(
                                                 <tr key={item.id}>
                                                     <td>{item.conta_id.pessoaId.nome}</td>

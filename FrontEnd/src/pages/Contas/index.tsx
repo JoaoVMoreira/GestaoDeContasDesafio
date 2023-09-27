@@ -26,7 +26,7 @@ function Contas(){
         bandeiraAtivo: true
     }
 
-    const [busca, setBusca] = useState("")
+    const [busca, setBusca] = useState<string>("")
     const[getContas, setGetContas] = useState<IContas>()
     const[showInfos, setShowInfos] = useState<boolean>(false)
     const[selectedItem, setSelectedItem] = useState<IContasFull>(data)

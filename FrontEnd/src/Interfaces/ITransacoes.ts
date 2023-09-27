@@ -9,6 +9,7 @@ export interface ITransacoesArray{
 }
 
 export interface ITransacaoFull{
+    id: number,
     conta_id: {
         id: number,
         pessoaId: {
