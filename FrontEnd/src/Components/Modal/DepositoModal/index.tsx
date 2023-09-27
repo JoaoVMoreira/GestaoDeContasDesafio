@@ -1,8 +1,9 @@
+import { IModalSaque } from '../../../Interfaces/IModal';
 import { api } from '../../../Services/api';
 import '../modal.scss'
 import {useState} from 'react'
 
-function DepositoModal({isOpen, close, id}:any){
+function DepositoModal({isOpen, close, id}:IModalSaque){
 
     const[valorDeposito, setValorDeposito] = useState<number|undefined>();
 

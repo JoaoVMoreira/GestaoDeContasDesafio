@@ -7,3 +7,22 @@ export interface ITransacoes{
 export interface ITransacoesArray{
     data: ITransacoes[]
 }
+
+export interface ITransacaoFull{
+    conta_id: {
+        id: number,
+        pessoaId: {
+            nome: string, 
+            cpf: number,
+            dataNascimento: string
+        },
+        saldo: number| undefined,
+        limiteSaldoDiario: number | undefined,
+        tipoConta: string 
+        dataCriacao: string
+        bandeiraAtivo: boolean
+    },
+    valorTransacao: number | undefined,
+    tipoTransacao: string,
+    dataTransacao: string
+}

@@ -1,8 +1,9 @@
+import { IModalSaque } from '../../../Interfaces/IModal';
 import { api } from '../../../Services/api';
 import '../modal.scss'
 import {useState} from 'react'
 
-function SaqueModal({isOpen, close, id}:any){
+function SaqueModal({isOpen, close, id}:IModalSaque){
 
     const[valorSaque, setValorSaque] = useState<number|undefined>();
 

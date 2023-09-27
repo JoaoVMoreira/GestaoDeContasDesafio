@@ -1,22 +1,41 @@
 import { useState, useEffect } from "react";import { api } from "../../Services/api";
 import Menu from "../../Components/Menu";
-import { ITransacoesArray } from "../../Interfaces/ITransacoes";
+import { ITransacaoFull, ITransacoesArray } from "../../Interfaces/ITransacoes";
 import { Link } from "react-router-dom";
 import './transacao.scss'
 import ExtratoModal from "../../Components/Extrado";
 
 function Transacoes(){
-
+    const data = {
+        conta_id: {
+            id: 0,
+            pessoaId: {
+                nome: '', 
+                cpf: 0,
+                dataNascimento: ''
+            },
+            saldo: 0,
+            limiteSaldoDiario: 0,
+            tipoConta: '', 
+            dataCriacao: '',
+            bandeiraAtivo: false
+        },
+        valorTransacao: 0,
+        tipoTransacao: '',
+        dataTransacao: ''
+    }
     const[getTransacao, setGetTransacao] = useState<ITransacoesArray>()
     const[extratoModal, setExtratoModal] = useState<boolean>(false)
+    const[transacao, setTransacao] = useState<ITransacaoFull>(data)
 
     async function getTransacoesData(){
         const response = await api.get("/transacoes")
         setGetTransacao(response.data)
     }
 
-    function handleExtratoModal(){
+    function handleExtratoModal<VoidFunction>(item:ITransacaoFull){
         setExtratoModal(!extratoModal)
+        setTransacao(item)
     }
 
     useEffect(()=> {
@@ -67,7 +86,7 @@ function Transacoes(){
                                                     <td>{item.conta_id.pessoaId.nome}</td>
                                                     <td>{item.tipoTransacao}</td>
                                                     <td>{item.valorTransacao}</td>
-                                                    <td><button onClick={handleExtratoModal}>GERAR ESTRATO</button></td>
+                                                    <td><button onClick={() => {handleExtratoModal(item)}}>GERAR ESTRATO</button></td>
                                                 </tr>
                                             )
                                         })
@@ -80,7 +99,7 @@ function Transacoes(){
                         </div>
                     </div>
                 </div>
-                <ExtratoModal isOpen={extratoModal} close={handleExtratoModal}/>
+                <ExtratoModal isOpen={extratoModal} close={handleExtratoModal} transacao={transacao}/>
             </div>
         </>
     )

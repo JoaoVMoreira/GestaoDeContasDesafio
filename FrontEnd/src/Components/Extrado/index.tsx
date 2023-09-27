@@ -1,14 +1,46 @@
+import { format, parseISO } from 'date-fns';
 import './extrato.scss'
+import { IModalTransacao } from '../../Interfaces/IModal';
 
-function ExtratoModal({isOpen, close}:any){
+function ExtratoModal({isOpen, close, transacao}:IModalTransacao){
     if(isOpen){
         return(
             <>  
                 <div className='backgroundStyle'>
                     <div className='contentStyle'>
-                        <p>^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</p>
-                        <p>Extrato transação</p>
-                        <p>---------------------------------------------------------------------</p>
+                        <hr />
+                        <h3>Extrato transação</h3>
+                        <hr />
+                        <table>
+                            <tr>
+                                <th>Nome:</th>
+                                <td>{transacao.conta_id.pessoaId.nome}</td>
+                                <th>Data de Nascimento:</th>
+                                <td>{format(parseISO(transacao.conta_id.pessoaId.dataNascimento),"dd/MM/yyyy")}</td>
+                            </tr>
+                            <tr>
+                                <th>CPF:</th>
+                                <td>{transacao.conta_id.pessoaId.cpf}</td>
+                                <th>Tipo de Conta:</th>
+                                <td>{transacao.conta_id.tipoConta}</td>
+                            </tr>
+                            <tr>
+                                <th>Limite diário:</th>
+                                <td>{transacao.conta_id.limiteSaldoDiario}</td>
+                                <th>Saldo Atual:</th>
+                                <td>{transacao.conta_id.saldo}</td>
+                            </tr>
+                            <tr>
+                                <th>Tipo de transação:</th>
+                                <td>{transacao.tipoTransacao}</td>
+                                <th>Valor Transação</th>
+                                <td>{transacao.valorTransacao}</td>
+                            </tr>
+                            <tr>
+                                <th>Data da Transação:</th>
+                                <td>{format(parseISO(transacao.dataTransacao),"dd/MM/yyyy")}</td>
+                            </tr>
+                        </table>
                         <button onClick={close}>CLOSE</button>
                     </div>
                 </div>
