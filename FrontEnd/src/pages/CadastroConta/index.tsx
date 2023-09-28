@@ -1,50 +1,59 @@
 import { useState, useEffect } from "react";
 import { api } from "../../Services/api";
 import Menu from "../../Components/Menu";
-import { IContas, IContasArray } from "../../Interfaces/IContas";
+import { IContas, IContasArray, IContasFull, IContasFullPost } from "../../Interfaces/IContas";
+import { useMutation, useQuery } from 'react-query'
 
 import './CadastraConta.scss'
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+async function getClientes(){
+    return await api.get("/pessoas").then(response => response.data)
+}
 
 function CadastroConta(){
     const [cliente, SetCliente] = useState<number>(0)
     const [tipoConta, SetTipoConta] = useState<string>("")
     const [saldoInicial, SetSaldoInicial] = useState<number>()
     const [limiteDiario, SetLimiteDiario] = useState<number>()
-    const [clientes, setClientes] = useState<IContasArray>()
     const navigate = useNavigate();
 
-    async function listClientes(){
-        const response = await api.get("/pessoas")
-        setClientes(response.data)
+    const { data } = useQuery({
+        queryKey: ['clientes'],
+        queryFn: getClientes,
+    })
+
+    const dataConta: IContas = {
+        pessoaId: cliente,
+        saldo: saldoInicial,
+        limiteSaldoDiario: limiteDiario,
+        tipoConta: tipoConta 
     }
+
+    async function postConta(){
+        return await api.post("/contas", dataConta).then(response => response.data)
+    }
+
+    const { mutate } = useMutation({
+        mutationKey: ['conta'],
+        mutationFn: postConta,
+        onSuccess(){
+            alert("Cadastro realizado com sucesso")
+        }, 
+        onError(error){
+            alert(`Ocorreu um erro no momento do cadastro: ${error}`)
+        }
+    })
 
     async function handleCadastraConta(){
 
         if(cliente == null || tipoConta == '' || limiteDiario == 0){
             return alert("Favor preencher todos os campos")
-
         }
-
-        const data: IContas = {
-            pessoaId: cliente,
-            saldo: saldoInicial,
-            limiteSaldoDiario: limiteDiario,
-            tipoConta: tipoConta 
-        }
-            await api.post("/contas", data)
-            .then(response => { 
-                alert("Cadastro realizado com sucesso")
-                navigate("/contas")
-                return navigate(0)
-                
-            })
-            .catch(error=>{return alert("Ocorreu um erro no cadastro do cliente: "+ error)})
+        mutate();
+        navigate('/contas');
     }
-    
-    useEffect(()=>{
-        listClientes()
-    }, [])
+
     
     return( 
         <>
@@ -58,7 +67,7 @@ function CadastroConta(){
                         <select value={cliente} onChange={(e) => SetCliente(parseInt(e.target.value))}>
                             <option accessKey=""></option>
                             {
-                                clientes?.map((item: any)=>{
+                                data?.map((item: IContasFullPost)=>{
                                     return(
                                         <option key={item.id} value={item.id}>{item.nome}</option>
                                     )

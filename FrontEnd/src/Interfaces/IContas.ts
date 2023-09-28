@@ -22,3 +22,8 @@ export interface IContasFull{
     dataCriacao: string
     bandeiraAtivo: boolean
 }
+
+export interface IContasFullPost{
+    id: number,
+    nome: string
+}

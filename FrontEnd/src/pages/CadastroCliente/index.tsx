@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { api } from "../../Services/api";
 import Menu from "../../Components/Menu";
-
+import { useMutation } from 'react-query'
 import './CadastroCliente.scss'
 import { IPessoa } from "../../Interfaces/IPessoa";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +13,27 @@ function CadastrarPessoa(){
     const [dataNascimento, SetDataNascimento] = useState("");
     const navigate = useNavigate();
 
+    const data: IPessoa = {
+        nome: nome,
+        cpf: cpf, 
+        dataNascimento: new Date(dataNascimento)
+    }
+
+    async function postCliente() {
+        return api.post('/pessoas', data)
+    }
+
+    const {mutate} = useMutation({
+        mutationKey: ['cliente'],
+        mutationFn: postCliente,
+        onSuccess() {
+            alert("Cadastro realizado com sucesso!")
+        },
+        onError(error){
+            alert(`Ocorreu um erro no momento do cadastro: ${error}`)
+        }
+    })
+
     async function handleCadastraConta(){
 
         if(nome == '' || cpf == null || dataNascimento == ''){
@@ -22,19 +43,8 @@ function CadastrarPessoa(){
             alert("CPF inválido")
         }
 
-        const data: IPessoa = {
-            nome: nome,
-            cpf: cpf, 
-            dataNascimento: new Date(dataNascimento)
-        }
-        await api.post("/pessoas", data)
-        .then(response=>{
-            alert("Cliente cadastrado com sucesso")
-            navigate("/criar_conta")
-            return navigate(0)
-        }).catch(error => {
-            return alert("Erro ao cadastrar: "+error)
-        })
+        mutate();
+        navigate("/criar_conta");
     }
 
     return(

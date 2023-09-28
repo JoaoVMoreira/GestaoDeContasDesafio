@@ -1,27 +1,54 @@
 import { useEffect, useState } from "react";
 import { api } from "../../Services/api";
 import Menu from "../../Components/Menu";
-import { IContasArray } from "../../Interfaces/IContas";
+import { IContas, IContasArray, IContasFull } from "../../Interfaces/IContas";
 import { ITransacoes } from "../../Interfaces/ITransacoes";
+
+import { useMutation, useQuery } from 'react-query'
 
 import './novaTransacao.scss'
 import {useNavigate} from "react-router-dom";
 
+
+
+async function GetContas(){
+    return await api.get("/contas").then(response => response.data)
+}
+
 function NovaTransacao(){
-    const [getContas, setGetContas] = useState<IContasArray>()
     const [conta, setConta] = useState<number>(0)
     const [tipoTransacao, setTipoTransacao] = useState<string>("")
     const [valorTransacao, setValorTransacao] = useState<number>()
     const navigate = useNavigate();
 
-    async function GetContas(){
-        const response = await api.get("/contas")
-        setGetContas(response.data)
+
+    const dataTransacao: ITransacoes = {
+        contaId: conta,
+        valorTransacao: valorTransacao,
+        tipoTransacao: tipoTransacao
     }
 
-    useEffect(()=>{
-        GetContas()
-    }, [])
+    async function postTransacao(){
+        return await api.post("/transacoes", dataTransacao).then(response => response.data)
+    }
+
+
+    const { mutate } = useMutation({
+        mutationKey: ['transacao'],
+        mutationFn: postTransacao,
+        onSuccess(){
+            alert("Transação cadastrada com sucesso!")
+        },
+        onError(error){
+            alert(`Erro ao cadastrar transação: ${error}`)
+        }
+    })
+
+    const { data } = useQuery({
+        queryKey: ['transacao'],
+        queryFn: GetContas
+    })
+
 
     async function handleCadastraTransacao(){
 
@@ -29,20 +56,8 @@ function NovaTransacao(){
             return alert('Favor preencher todos os campos')
 
         }
-        const data: ITransacoes = {
-            contaId: conta,
-            valorTransacao: valorTransacao,
-            tipoTransacao: tipoTransacao
-        }
-
-        await api.post("/transacoes", data)
-        .then(response=>{
-            alert("Transação realizada com sucesso")
-            navigate("/transacoes")
-            navigate(0)
-        })
-        .catch(error => {return alert("Erro na transação: " + error)})
-        
+        mutate();
+        navigate("/transacoes")
         
     }
 
@@ -58,7 +73,7 @@ function NovaTransacao(){
                         <select value={conta} onChange={(e) => setConta(parseInt(e.target.value))}>
                             <option accessKey=""></option>
                             {  
-                                getContas?.map((item:any) => {
+                                data?.map((item: IContasFull) => {
                                     return(
                                         <option key={item.id} value={item.id}>{item.pessoaId.nome}</option>
                                     )
