@@ -9,14 +9,17 @@ import { useNavigate } from "react-router-dom";
 function CadastrarPessoa(){
 
     const [nome, setNome] = useState<string>("");
-    const [cpf, setCpf] = useState<number>(0);
+    const [cpf, setCpf] = useState<number|undefined>();
     const [dataNascimento, SetDataNascimento] = useState("");
     const navigate = useNavigate();
 
     async function handleCadastraConta(){
 
-        if(nome == '' || cpf == 0 || dataNascimento == ''){
+        if(nome == '' || cpf == null || dataNascimento == ''){
             return alert('Favor preencher todos os campos')
+        }
+        if(cpf.toString().length < 11 ){
+            alert("CPF inválido")
         }
 
         const data: IPessoa = {

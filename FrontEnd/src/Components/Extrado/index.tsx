@@ -26,15 +26,15 @@ function ExtratoModal({isOpen, close, transacao}:IModalTransacao){
                             </tr>
                             <tr>
                                 <th>Limite diário:</th>
-                                <td>R${transacao.conta_id.limiteSaldoDiario}</td>
+                                <td>R${transacao.conta_id.limiteSaldoDiario?.toFixed(2)}</td>
                                 <th>Saldo Atual:</th>
-                                <td>R${transacao.conta_id.saldo}</td>
+                                <td>R${transacao.conta_id.saldo?.toFixed(2)}</td>
                             </tr>
                             <tr>
                                 <th>Tipo de transação:</th>
                                 <td>{transacao.tipoTransacao}</td>
                                 <th>Valor Transação</th>
-                                <td>R${transacao.valorTransacao}</td>
+                                <td>R${transacao.valorTransacao?.toFixed(2)}</td>
                             </tr>
                             <tr>
                                 <th>Data da Transação:</th>

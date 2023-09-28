@@ -1,51 +1,64 @@
 import { useState, useEffect } from "react";import { api } from "../../Services/api";
 import Menu from "../../Components/Menu";
-import { ITransacaoFull, ITransacoesArray } from "../../Interfaces/ITransacoes";
+import { ITransacaoFull } from "../../Interfaces/ITransacoes";
 import { Link } from "react-router-dom";
 import './transacao.scss'
 import ExtratoModal from "../../Components/Extrado";
+import { useQuery } from 'react-query'
+
+const dataType = {
+    id:0,
+    conta_id: {
+        id: 0,
+        pessoaId: {
+            nome: '', 
+            cpf: 0,
+            dataNascimento: ''
+        },
+        saldo: 0,
+        limiteSaldoDiario: 0,
+        tipoConta: '', 
+        dataCriacao: '',
+        bandeiraAtivo: false
+    },
+    valorTransacao: 0,
+    tipoTransacao: '',
+    dataTransacao: ''
+}
 
 function Transacoes(){
-    const data = {
-        conta_id: {
-            id: 0,
-            pessoaId: {
-                nome: '', 
-                cpf: 0,
-                dataNascimento: ''
-            },
-            saldo: 0,
-            limiteSaldoDiario: 0,
-            tipoConta: '', 
-            dataCriacao: '',
-            bandeiraAtivo: false
-        },
-        valorTransacao: 0,
-        tipoTransacao: '',
-        dataTransacao: ''
-    }
-    const[getTransacao, setGetTransacao] = useState<ITransacoesArray>()
     const[extratoModal, setExtratoModal] = useState<boolean>(false)
-    const[transacao, setTransacao] = useState<ITransacaoFull>(data)
+    const[transacao, setTransacao] = useState<ITransacaoFull>(dataType)
     const[busca, setBusca] = useState<string>('')
 
-    async function getTransacoesData(){
-        const response = await api.get("/transacoes")
-        setGetTransacao(response.data)
-    }
-
-    function handleExtratoModal<VoidFunction>(item:ITransacaoFull){
+    function handleExtratoModal(item:ITransacaoFull){
         setExtratoModal(!extratoModal)
         setTransacao(item)
     }
 
-    const filterTransacao = getTransacao?.filter((item:ITransacaoFull)=> 
+    async function getTransacao(){
+        return await api.get("/transacoes").then((response)=> response.data)
+    }
+
+    const {data, isLoading} = useQuery({
+        queryKey: ['todos'],
+        queryFn: getTransacao
+    })
+
+    if(isLoading){
+        return(
+            <>
+                <div className='loading'>
+                    <p>Carregando...</p>
+                </div>
+            </>
+        )       
+    }
+
+    const filterTransacao = data?.filter((item:ITransacaoFull)=> 
         item.conta_id.pessoaId.nome.toLowerCase().includes(busca.toLowerCase())
     )
 
-    useEffect(()=> {
-        getTransacoesData()
-    }, [])
     return(
         <>
             <div className="page">
@@ -90,7 +103,7 @@ function Transacoes(){
                                                 <tr key={item.id}>
                                                     <td>{item.conta_id.pessoaId.nome}</td>
                                                     <td>{item.tipoTransacao}</td>
-                                                    <td>{item.valorTransacao}</td>
+                                                    <td>R${item.valorTransacao?.toFixed(2)}</td>
                                                     <td><button onClick={() => {handleExtratoModal(item)}}>GERAR ESTRATO</button></td>
                                                 </tr>
                                             )

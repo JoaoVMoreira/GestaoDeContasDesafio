@@ -5,14 +5,19 @@ import { IContas, IContasFull } from '../../Interfaces/IContas';
 import { Link, useNavigate } from 'react-router-dom';
 import { BsInfoLg } from "react-icons/bs";
 import { format, parseISO} from "date-fns"
+import { useQuery } from 'react-query';
 
 
 import './contas.scss'
 import SaqueModal from '../../Components/Modal/SaqueModal';
 import DepositoModal from '../../Components/Modal/DepositoModal';
 
+async function getContas(){
+    return await api.get("/contas").then(response => response.data)
+} 
+
 function Contas(){
-    const data:IContasFull = {
+    const dataType:IContasFull = {
         id: 0,
         pessoaId: {
             nome: "", 
@@ -27,16 +32,26 @@ function Contas(){
     }
 
     const [busca, setBusca] = useState<string>("")
-    const[getContas, setGetContas] = useState<IContas>()
     const[showInfos, setShowInfos] = useState<boolean>(false)
-    const[selectedItem, setSelectedItem] = useState<IContasFull>(data)
+    const[selectedItem, setSelectedItem] = useState<IContasFull>(dataType)
     const[saqueModal, setSaqueModal] = useState<boolean>(false)
     const[depositoModal, setDepositoModal] = useState<boolean>(false)
     const navigate = useNavigate();
 
-    async function GetContas(){
-        const response = await api.get("/contas")
-        setGetContas(response.data)
+    const {data, isLoading} = useQuery({
+        queryKey: ['contas'],
+        queryFn: getContas
+    }
+    )
+
+    if(isLoading){
+        return(
+            <>
+                <div className='loading'>
+                    <p>Carregando...</p>
+                </div>
+            </>
+        )       
     }
 
     //<--INFOS-->
@@ -64,7 +79,7 @@ function Contas(){
         navigate(0)
     }
 
-    const filterContas = getContas?.filter((item:IContasFull)=>
+    const filterContas = data?.filter((item:IContasFull)=>
         item.pessoaId.nome.toLowerCase().includes(busca.toLowerCase()) ||
         
         item.pessoaId.cpf.toString().includes(busca)
@@ -79,11 +94,6 @@ function Contas(){
             alert("Ocorreu um erro: " + error)
         })
     }
-    
-    useEffect(()=> {
-        GetContas()
-    }, [])
-    
     
     return(
         <>
@@ -146,11 +156,11 @@ function Contas(){
                                         </tr>
                                         <tr>
                                             <th>Saldo atual</th>
-                                            <td>R${selectedItem.saldo}</td>
+                                            <td>R${selectedItem.saldo?.toFixed(2)}</td>
                                         </tr>
                                         <tr>
                                             <th>Limite diário</th>
-                                            <td>R${selectedItem.limiteSaldoDiario}</td>
+                                            <td>R${selectedItem.limiteSaldoDiario?.toFixed(2)}</td>
                                         </tr>
                                         <tr>
                                             <th>Tipo de conta</th>

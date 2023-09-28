@@ -1,5 +1,5 @@
 export interface IPessoa{
     nome: string, 
-    cpf: number,
+    cpf: number|undefined,
     dataNascimento: Date
 }

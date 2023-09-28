@@ -44,21 +44,21 @@ function Menu(){
                         </li>
 
                         <li>
-                            <Link to={'/transacoes'}>
+                            <a href='/transacoes'>
                                 <div className='menu-icon'>
                                     <TbReportMoney/>
                                     <label>Transações</label>
                                 </div>
-                            </Link>
+                            </a>
                         </li>
 
                         <li>
-                            <Link to={'/contas'}>
+                            <a href={'/contas'}>
                                 <div className='menu-icon'>
                                     <BsPersonRolodex/>
                                     <label>Contas</label>
                                 </div>
-                            </Link>
+                            </a>
                         </li>
                         
                     </ul>
