@@ -45,16 +45,6 @@ function Transacoes(){
         queryFn: getTransacao
     })
 
-    if(isLoading){
-        return(
-            <>
-                <div className='loading'>
-                    <p>Carregando...</p>
-                </div>
-            </>
-        )       
-    }
-
     const filterTransacao = data?.filter((item:ITransacaoFull)=> 
         item.conta_id.pessoaId.nome.toLowerCase().includes(busca.toLowerCase())
     )
@@ -74,18 +64,15 @@ function Transacoes(){
                             <p>Conta</p>
                             <input type="text" value={busca} onChange={e => setBusca(e.target.value)}/>
                         </label>
-                        <label htmlFor="">
-                            <p>Data Inicial</p>
-                            <input type="date"/>
-                        </label>
-                        <label htmlFor="">
-                            <p>Data final</p>
-                            <input type="date"/>
-                        </label>
                     </div>
 
                     <div className="table-content">
-                        <div className="tabela">
+                        {isLoading ? (
+                            <div className='loading'>
+                                <p>Carregando...</p>
+                            </div>
+                        ) : (
+                            <div className="tabela">
                             <table>
                                 <thead>
                                     <tr>
@@ -112,6 +99,8 @@ function Transacoes(){
                                 </tbody>
                             </table>           
                         </div>
+                        )}
+                        
                         <div className="btn">
                             <button><Link to={"/novaTransacao"}>+</Link></button>
                         </div>

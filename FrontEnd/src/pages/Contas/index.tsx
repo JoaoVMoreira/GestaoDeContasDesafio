@@ -44,15 +44,6 @@ function Contas(){
     }
     )
 
-    if(isLoading){
-        return(
-            <>
-                <div className='loading'>
-                    <p>Carregando...</p>
-                </div>
-            </>
-        )       
-    }
 
     //<--INFOS-->
     function handleShowInfo(item:any){
@@ -109,30 +100,36 @@ function Contas(){
 
                     <div className='contas-table'>
                         <div className="tabela-contas">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Nome</th>
-                                        <th>CPF</th>
-                                        <th>Tipo de Conta</th>
-                                        <th>Informações</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        filterContas?.map((item:IContasFull) => {
-                                            return(
-                                                <tr key={item.id}>
-                                                    <td>{item.pessoaId.nome}</td>
-                                                    <td>{item.pessoaId.cpf}</td>
-                                                    <td>{item.tipoConta}</td>
-                                                    <td><button onClick={() => handleShowInfo(item)}><BsInfoLg/></button></td>
-                                                </tr>
-                                            )
-                                        })
-                                    }
-                                </tbody>
-                            </table>
+                            {isLoading ? (
+                                <div className='loading'>
+                                    <p>Carregando...</p>
+                                </div>
+                            ) : (
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Nome</th>
+                                            <th>CPF</th>
+                                            <th>Tipo de Conta</th>
+                                            <th>Informações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            filterContas?.map((item:IContasFull) => {
+                                                return(
+                                                    <tr key={item.id}>
+                                                        <td>{item.pessoaId.nome}</td>
+                                                        <td>{item.pessoaId.cpf}</td>
+                                                        <td>{item.tipoConta}</td>
+                                                        <td><button onClick={() => handleShowInfo(item)}><BsInfoLg/></button></td>
+                                                    </tr>
+                                                )
+                                            })
+                                        }
+                                    </tbody>
+                                </table>
+                            )}
                             <div className='btn'>
                                 <button><Link to={"/criar_conta"}>+</Link></button>
                             </div>

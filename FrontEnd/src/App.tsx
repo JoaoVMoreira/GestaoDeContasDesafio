@@ -6,6 +6,7 @@ import Transacoes from "./pages/Transacoes"
 import CadastroConta from "./pages/CadastroConta"
 import Menu from "./Components/Menu"
 import { QueryClientProvider, QueryClient } from "react-query"
+import ErrorPage from "./pages/ErrorPage"
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="/transacoes" element={<Transacoes/>}/>
           <Route path="/criar_conta" element={<CadastroConta/>}/>
           <Route path="/menu" element={<Menu/>}></Route>
+          <Route path="*" element={<ErrorPage/>}></Route>
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
