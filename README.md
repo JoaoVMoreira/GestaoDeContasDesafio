@@ -111,7 +111,7 @@ git clone https://github.com/JoaoVMoreira/GestaoDeContasDesafio.git .
 BACKEND:
 
 # Abrir o diretorio BackEnd no compilador de sua preferência
-# Criar banco de dados com o nome KanBan
+# Criar banco de dados com o nome gestaoDeContas
 # OBS: Caso deseje realizar a alteração do nome do banco de dados
 # alterar em application.properties, linha 3:
 ```
