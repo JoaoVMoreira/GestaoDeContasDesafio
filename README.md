@@ -4,7 +4,7 @@
 
 ## 🔖 Informações
 
-- Adapitação do desafio: https://github.com/artinf0/desafio2 
+- Adaptação do desafio: https://github.com/artinf0/desafio2 
 - Aplicação de gestão de contas bancárias
 
 ## 🖼 Screenshot das telas da aplicação
